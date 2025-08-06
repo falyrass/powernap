@@ -1,0 +1,45 @@
+Power Nap: Your Simple Shutdown Timer
+Welcome to Power Nap, the perfect little helper for movie nights, long downloads, or any task that keeps you away from your computer. Our goal is to save energy and make your life easier by automatically shutting down your PC after a set time.
+
+This guide will show you how to use the app in just a few simple steps.
+
+1. Setting Your Timer
+The main window of the app is your control panel. You can set the desired shutdown time using the three counters:
+
+Hours: Use the up and down arrows to set the number of hours.
+
+Minutes: Use the up and down arrows to set the number of minutes.
+
+Seconds: Use the up and down arrows to set the number of seconds.
+
+For example, if your movie is 2 hours and 30 minutes long, you would set the counters to 02:30:00.
+
+2. Starting the Countdown
+Once your time is set, simply click the "Start" button. The timer will begin to count down, and you can go back to enjoying your movie or let your task run without worry.
+
+3. Pausing the Timer
+Need to stop the countdown for a moment?
+
+Click the "Pause" button. The timer will stop, and the time will be frozen.
+
+To resume the countdown, simply click "Start" again.
+
+4. Adding More Time
+If you realize your task will take longer than expected, there’s no need to stop and reset the timer.
+
+Click the "+ 10 min" button to add 10 minutes to your current timer. You can click it as many times as you need.
+
+5. Quitting the Application
+If you want to close Power Nap before the timer finishes:
+
+Click the "Quit" button. The application will close, and the timer will be canceled.
+
+You can also click on the "File" menu at the top left and select "Exit".
+
+What Happens When the Timer Ends?
+When the timer reaches zero, the application will automatically perform a full shutdown of your PC. It’s that simple!
+
+Happy viewing, downloading, and sleeping!
+
+RASAMIZANANY Falimandimbisoa Luc - 2025
+rasfaly@gmail.com

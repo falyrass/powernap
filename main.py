@@ -24,8 +24,11 @@ class PowerNapApp(tk.Tk):
 
         # Définir l'icône de l'application
         try:
-            self.iconbitmap(os.path.join(resource_path, "logo.ico"))
+            icon_path = os.path.join(resource_path, "logo.ico")
+            print(f"[PowerNap] Chemin utilisé pour l'icône : {icon_path}")
+            self.iconbitmap(icon_path)
         except Exception as e:
+            print(f"[PowerNap] Erreur chargement icône : {e}")
             pass  # Si le logo n'est pas trouvé, ignorer
 
         # Variables d'état du minuteur
@@ -58,13 +61,72 @@ class PowerNapApp(tk.Tk):
         self.update_time_fields() # Affichage initial du temps
         self.update_buttons()     # État initial des boutons
 
+
     def create_menu(self):
         # Création de la barre de menu
         menubar = tk.Menu(self)
         file_menu = tk.Menu(menubar, tearoff=0)
-        file_menu.add_command(label="Quit", command=self.on_quit)  # Option pour quitter
+        file_menu.add_command(label="Quit - Alt+F4", command=self.on_quit)  # Option pour quitter
         menubar.add_cascade(label="File", menu=file_menu)
+
+        # Ajout du menu Help
+        help_menu = tk.Menu(menubar, tearoff=0)
+        # Ajout de l'image help.png si disponible
+        try:
+            resource_path = sys._MEIPASS if hasattr(sys, '_MEIPASS') else os.path.abspath('.')
+            self.help_img = tk.PhotoImage(file=os.path.join(resource_path, "help.png"))
+            # Ajuster la taille de l'image pour le menu (plus petit, ~24px max)
+            target_size = 24
+            w, h = self.help_img.width(), self.help_img.height()
+            scale_w = max(w // target_size, 1)
+            scale_h = max(h // target_size, 1)
+            self.help_img = self.help_img.subsample(scale_w, scale_h)
+            help_menu.add_command(label="Help - F1", image=self.help_img, compound="left", command=self.show_help)
+        except Exception:
+            self.help_img = None
+            help_menu.add_command(label="Help -F1", command=self.show_help)
+        menubar.add_cascade(label="Help", menu=help_menu)
         self.config(menu=menubar)
+
+        # Bind F1 to open help
+        self.bind_all('<F1>', lambda event: self.show_help())
+
+    def show_help(self):
+        # Ouvre une fenêtre d'aide affichant le contenu de help.txt avec scrollbar, logo et focus
+        help_win = tk.Toplevel(self)
+        help_win.title("Help - Power Nap")
+        help_win.geometry("500x500")
+        help_win.resizable(True, True)
+        # Définir l'icône si possible
+        try:
+            resource_path = sys._MEIPASS if hasattr(sys, '_MEIPASS') else os.path.abspath('.')
+            help_win.iconbitmap(os.path.join(resource_path, "logo.ico"))
+        except Exception:
+            pass
+        # Frame principale
+        main_frame = tk.Frame(help_win, bg="#f5f6fa")
+        main_frame.pack(expand=True, fill=tk.BOTH)
+        # Ajout d'une scrollbar
+        scrollbar = tk.Scrollbar(main_frame)
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        text = tk.Text(main_frame, wrap="word", font=("Segoe UI", 11), bg="#f5f6fa", yscrollcommand=scrollbar.set)
+        text.pack(expand=True, fill=tk.BOTH, padx=10, pady=10)
+        scrollbar.config(command=text.yview)
+        # Charger le texte d'aide
+        try:
+            with open(os.path.join(resource_path, "help.txt"), encoding="utf-8") as f:
+                content = f.read()
+        except Exception:
+            content = "Help file not found."
+        text.insert("1.0", content)
+        text.config(state="disabled")
+        # Bouton pour fermer la fenêtre d'aide
+        close_btn = ttk.Button(help_win, text="Close", command=help_win.destroy)
+        close_btn.pack(pady=5)
+        # Focus sur la fenêtre d'aide
+        help_win.transient(self)
+        help_win.grab_set()
+        help_win.focus()
 
     def create_toolbar(self):
         # Création de la barre d'outils en haut
